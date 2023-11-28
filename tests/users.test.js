@@ -1,4 +1,5 @@
 const request = require("supertest");
+const crypto = require("node:crypto");
 
 const app = require("../src/app");
 const database = require("../database")
@@ -31,3 +32,56 @@ describe("GET /api/users/:id", () => {
     expect(response.status).toEqual(404);
   });
 });
+describe("POST /api/users", () => {
+  it("should return created user", async () => {
+   const newUser = {
+    firstname: "Marie",
+
+    lastname: "Martin",
+
+    email: `${crypto.randomUUID()}@wild.co`,
+
+    city: "Paris",
+
+    language: "French",
+    };
+
+    const response = await request(app).post("/api/users").send(newUser);
+
+    expect(response.headers["content-type"]).toMatch(/json/);
+    expect(response.status).toEqual(201);
+    expect(response.body).toHaveProperty("id");
+    expect(typeof response.body.id).toBe("number");
+
+    const [result] = await database.query(
+      "SELECT * FROM users WHERE id=?",
+      response.body.id
+    );
+
+    const [movieInDatabase] = result;
+
+    expect(movieInDatabase).toHaveProperty("id");
+
+    expect(movieInDatabase).toHaveProperty("firstname");
+    expect(movieInDatabase.firstname).toStrictEqual(newUser.firstname);
+    expect(movieInDatabase).toHaveProperty("lastname");
+    expect(movieInDatabase.lastname).toStrictEqual(newUser.lastname);
+    expect(movieInDatabase).toHaveProperty("email");
+    expect(movieInDatabase.email).toStrictEqual(newUser.email);
+    expect(movieInDatabase).toHaveProperty("city");
+    expect(movieInDatabase.city).toStrictEqual(newUser.city);
+    expect(movieInDatabase).toHaveProperty("language");
+    expect(movieInDatabase.language).toStrictEqual(newUser.language);
+  });
+
+  it("should return an error", async () => {
+    const userWithMissingProps = { firstname: "Harry Potter" };
+
+    const response = await request(app)
+      .post("/api/users")
+      .send(userWithMissingProps);
+
+    expect(response.status).toEqual(500);
+  });
+});
+
