@@ -67,7 +67,7 @@ const updateUser = (req, res) => {
       if (result.affectedRows === 0) {
         res.sendStatus(404);
       } else {
-        res.sendStatus(200);
+        res.sendStatus(204);
       }
     })
 
