@@ -6,7 +6,6 @@ const getUsers = (req, res) => {
       const users = result[0];
 
       res.status(200).json(users);
-     
     })
     .catch((err) => {
       console.error(err);
@@ -51,9 +50,37 @@ const postUser = (req, res) => {
       res.sendStatus(500);
     });
 };
+const updateUser = (req, res) => {
+  const id = parseInt(req.params.id);
+
+  const { firstname, lastname, email, city, language } = req.body;
+
+  database
+
+    .query(
+      "update movies set firstname = ?, lastname = ?, email = ?, city = ?, language = ? where id = ?",
+
+      [firstname, lastname, email, city, language, id]
+    )
+
+    .then(([result]) => {
+      if (result.affectedRows === 0) {
+        res.sendStatus(404);
+      } else {
+        res.sendStatus(204);
+      }
+    })
+
+    .catch((err) => {
+      console.error(err);
+
+      res.sendStatus(500);
+    });
+};
 
 module.exports = {
   getUsers,
   getUserById,
   postUser,
+  updateUser,
 };
