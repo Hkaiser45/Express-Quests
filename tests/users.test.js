@@ -80,7 +80,7 @@ describe("POST /api/users", () => {
       .post("/api/users")
       .send(userWithMissingProps);
 
-    expect(response.status).toEqual(500);
+    expect(response.status).toEqual(422);
   });
 });
 describe("PUT /api/users/:id", () => {
@@ -118,7 +118,7 @@ describe("PUT /api/users/:id", () => {
       .put(`/api/users/${id}`)
       .send(updateUser);
 
-    expect(response.status).toEqual(200);
+    expect(response.status).toEqual(204);
 
     const [user] = await database.query("SELECT * FROM users WHERE id=?", id);
 
@@ -149,7 +149,7 @@ describe("PUT /api/users/:id", () => {
       .put(`/api/users/1`)
       .send(userWithMissingProps);
 
-    expect(response.status).toEqual(500);
+    expect(response.status).toEqual(422);
   });
 
   it("should return no user", async () => {
