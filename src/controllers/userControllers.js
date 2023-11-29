@@ -58,7 +58,7 @@ const updateUser = (req, res) => {
   database
 
     .query(
-      "update movies set firstname = ?, lastname = ?, email = ?, city = ?, language = ? where id = ?",
+      "update users set firstname = ?, lastname = ?, email = ?, city = ?, language = ? where id = ?",
 
       [firstname, lastname, email, city, language, id]
     )
@@ -67,7 +67,7 @@ const updateUser = (req, res) => {
       if (result.affectedRows === 0) {
         res.sendStatus(404);
       } else {
-        res.sendStatus(204);
+        res.sendStatus(200);
       }
     })
 
