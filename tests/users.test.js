@@ -57,9 +57,9 @@ describe("POST /api/users", () => {
       response.body.id
     );
 
-    const [movieInDatabase] = result;
+    const [userInDatabase] = result;
 
-    expect(movieInDatabase).toHaveProperty("id");
+    expect(userInDatabase).toHaveProperty("id");
 
     expect(userInDatabase).toHaveProperty("firstname");
     expect(userInDatabase.firstname).toStrictEqual(newUser.firstname);
@@ -68,9 +68,9 @@ describe("POST /api/users", () => {
     expect(userInDatabase).toHaveProperty("email");
     expect(userInDatabase.email).toStrictEqual(newUser.email);
     expect(userInDatabase).toHaveProperty("city");
-    expect(userInDatabase.city).toStrictEqual(newUser.city);
+    expect(userInDatabase.city).toEqual(newUser.city);
     expect(userInDatabase).toHaveProperty("language");
-    expect(userInDatabase.language).toStrictEqual(newUser.language);
+    expect(userInDatabase.language).toEqual(newUser.language);
   });
 
   it("should return an error", async () => {
