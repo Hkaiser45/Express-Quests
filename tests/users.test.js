@@ -61,16 +61,16 @@ describe("POST /api/users", () => {
 
     expect(movieInDatabase).toHaveProperty("id");
 
-    expect(movieInDatabase).toHaveProperty("firstname");
-    expect(movieInDatabase.firstname).toStrictEqual(newUser.firstname);
-    expect(movieInDatabase).toHaveProperty("lastname");
-    expect(movieInDatabase.lastname).toStrictEqual(newUser.lastname);
-    expect(movieInDatabase).toHaveProperty("email");
-    expect(movieInDatabase.email).toStrictEqual(newUser.email);
-    expect(movieInDatabase).toHaveProperty("city");
-    expect(movieInDatabase.city).toStrictEqual(newUser.city);
-    expect(movieInDatabase).toHaveProperty("language");
-    expect(movieInDatabase.language).toStrictEqual(newUser.language);
+    expect(userInDatabase).toHaveProperty("firstname");
+    expect(userInDatabase.firstname).toStrictEqual(newUser.firstname);
+    expect(userInDatabase).toHaveProperty("lastname");
+    expect(userInDatabase.lastname).toStrictEqual(newUser.lastname);
+    expect(userInDatabase).toHaveProperty("email");
+    expect(userInDatabase.email).toStrictEqual(newUser.email);
+    expect(userInDatabase).toHaveProperty("city");
+    expect(userInDatabase.city).toStrictEqual(newUser.city);
+    expect(userInDatabase).toHaveProperty("language");
+    expect(userInDatabase.language).toStrictEqual(newUser.language);
   });
 
   it("should return an error", async () => {
